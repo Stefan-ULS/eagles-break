@@ -1,0 +1,67 @@
+{% extends'base.html' %}
+
+{% block head %} 
+   <title>
+        Login
+   </title>
+   <style>
+    html, body {
+    height: 100% !important; 
+    }
+   </style>
+{% endblock %}
+
+{% block main %} 
+<div class="container vh-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-6">
+            <div class=" text-center">
+                <img src="/static/photo/logo.png" class="img-fluid w-50 " alt="logo">
+            </div>
+            <div class="card my-3">
+             
+                <div class="card-header text-center">
+                    <h2>Login</h2>
+                </div>
+                <div class="card-body">
+                    <form action="/" method="post">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        <div class="d-flex">
+                            <button type="submit" class="btn btn-primary float-end">Submit</button>
+                        </div>
+                        <a href="/create-account"class="text-decoration-none">Create an account</a>
+                        
+                    </form>
+                      <!-- Display flash messages here -->
+            
+            
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %} 
+
+{% endblock %}
+

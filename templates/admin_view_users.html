@@ -1,0 +1,33 @@
+{% if user_system_role_value  == 'manager' %}
+<div class="row my-3">
+    {% for user in users_data %}
+    <div class="col-4">
+        <div class="card">
+            <div class="card-head">
+                <h2>
+                    Update information associated with: <b>{user.name}</b>
+                </h2>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('update_user', user_id=user['id']) }}" method="post">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" value="{{ user.email }}">
+                    </div>
+                    <div class="mb-3">
+                
+                        <p>
+                            Send an email for password reset
+                        </p>
+                        <a href="">Reset password for {user.name}</a> 
+                    </div>
+                    <div class="d-flex float-end">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

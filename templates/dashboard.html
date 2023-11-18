@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block head %}
+   <title>Dashboard</title>
+   <style>
+    
+    </style>
+   </style>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+ 
+   <link rel="stylesheet" href="\static\style.css?v2">
+   <style>
+    .row>* {
+        padding-right:0% !important;
+    }
+   </style>
+   <script>
+    $(document).ready(function() {
+        function updateDays() {
+            $.ajax({
+                url: '/get_user_days',
+                type: 'GET',
+                success: function(response) {
+                    $('#free-days').text(response.number_of_free_days);
+                    $('#used-days').text(response.number_of_days_used);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    
+        setInterval(updateDays, 1000);
+    
+        updateDays();
+    });
+    </script>
+    
+   {% endblock %}
+
+{% block main %} 
+        <!-- NAVBAR -->
+    {% include 'navbar.html' %}
+       <!-- Display flash messages -->
+       {% include 'alert_message.html' %}
+    
+    <ul id="notification-list">
+
+    </ul>
+   
+    <div class="row">
+        <div class="col">
+         
+        </div>
+    <h1 class="text-center">Welcome, {{ username }}</h1>
+   
+            
+       
+        
+    
+    </div>
+    <div class="row" style="--bs-gutter-x:0 !important">
+        <div class="col-xl-4 offset-xl-4 col-l-6 ">
+            <div class="card custom-card">
+                <div class="card-title">
+                    <p>
+                        Total number of free days left: <b id="free-days" class="text-success"></b>
+                    </p>
+                    <p>
+                        Total number of days used: <b id="used-days" class="text-warning"></b>
+                    </p>
+                </div>
+              <hr>
+                <form action="/dashboard" method="post">
+                    <label for="dates">Select your brake period below.</label>
+                    <input type="text" name="dates" id="dates" class="custom-input form-label">
+                    <label for="substitute">Who will cover you?</label>
+                    <select class="custom-select form-select" name="substitute" id="substitute">
+                            <option selected disabled></option>
+                        {% for sub in substitute %}
+                            <option  style="text-align: center;">{{ sub[0] }}</option>
+                        {% endfor %}
+                    </select>
+                    <a class="text-decoration-none" href="{{ url_for('user_info') }}">Holiday rethink.</a>
+                    <button type="submit" class="custom-button btn float-end">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+ 
+{% endblock %}
+
+{% block scripts %}
+<script src="\static\scirpt.js"></script>
+
+<script>
+    // https://www.daterangepicker.com/#example5
+        $(document).ready(function() {
+            $('input[name="dates"]').daterangepicker({
+                minDate: moment(),
+                    isInvalidDate: function(date) {
+                        // Disable weekends
+                        return date.weekday() === 0 || date.weekday() === 6;
+                    }
+                }).on('apply.daterangepicker', function(ev, picker) {
+                    var start = picker.startDate;
+                    var end = picker.endDate;
+                    var days = 0;
+
+                    for (var date = moment(start); date.isBefore(end) || date.isSame(end); date.add(1, 'days')) {
+                        if (date.weekday() !== 0 && date.weekday() !== 6) {
+                            days++;
+                        }
+                    }
+
+                console.log('Number of selected days excluding weekends:', days);
+            });
+        });
+
+  
+
+</script>
+{% endblock %}

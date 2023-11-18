@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block head %}
+   <title>Holiday Table</title>
+   <style>
+    html, body {
+        height: 100% !important;
+    }
+
+    </style>
+
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+
+   {% endblock %}
+
+{% block main %} 
+{% include 'navbar.html' %}
+<h1 class="text-center my-3">
+    Holiday Table
+</h1>
+
+<div class="row my-5">
+  <div class="col-8 offset-2">
+    <div class="my-3">
+      <input type="text" id="searchName" class="form-control w-25" onkeyup="search()" placeholder="Search by name">
+    </div>
+    <div class="text-center">
+      <p>Page: <span id="pageNumber" ></span></p>
+      <button class="btn btn-sm btn-outline-secondary text-center" onclick="prevPage()"><i class="bi bi-caret-left"></i></button>
+      <button class="btn btn-sm btn-outline-secondary text-center" onclick="nextPage()"> <i class="bi bi-caret-right"></i></button>
+     </div>
+      <table class="table table-striped table-hover text-center" id="myTable">
+          <thead>
+              <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Substitute</th>
+                  <th scope="col">Period</th>
+                  <th scope="col">Number of days</th>
+              </tr>
+          </thead>
+          <tbody id="tableUserData" class="table-group-divider">
+              {% for holiday in holidays %}
+              <tr class="{{'table-success' if holiday.status == 'green' else 'd-none' }}">
+                  <td>{{ holiday.name }}</td>
+                  <td>{{ holiday.substitute }}</td>
+                  <td>{{ holiday.period }}</td>
+                  <td>{{ holiday.nrOfDays }}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+     
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+function search() {
+    const input = document.getElementById('searchName');
+    const filter = input.value.toUpperCase();
+    const tableUserData = document.getElementById('tableUserData');
+    const trs = tableUserData.getElementsByTagName('tr');
+
+    for (let i = 0; i < trs.length; i++) {
+        const td = trs[i].getElementsByTagName('td')[0];
+        if (td) {
+            const txtValue = td.textContent || td.innerText;
+            trs[i].style.display = txtValue.toUpperCase().includes(filter) ? '' : 'none';
+        }
+    }
+}
+
+// Pagination
+let currentPage = 1;
+const rowsPerPage = 5;
+
+function updateTable() {
+    const tableUserData = document.getElementById('tableUserData');
+    const trs = tableUserData.getElementsByTagName('tr');
+    const totalRows = trs.length;
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    // Update page number display
+    const pageNumberSpan = document.getElementById('pageNumber');
+    pageNumberSpan.textContent = currentPage + '/' + totalPages;
+
+    for (let i = 0; i < trs.length; i++) {
+        trs[i].style.display = i >= (currentPage - 1) * rowsPerPage && i < currentPage * rowsPerPage ? '' : 'none';
+    }
+}
+
+function nextPage() {
+    const tableUserData = document.getElementById('tableUserData');
+    const trs = tableUserData.getElementsByTagName('tr');
+    const totalPages = Math.ceil(trs.length / rowsPerPage);
+
+    if (currentPage < totalPages) {
+        currentPage++;
+        updateTable();
+    }
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        updateTable();
+    }
+}
+
+updateTable();
+</script>
+{% endblock %}
+
+
+

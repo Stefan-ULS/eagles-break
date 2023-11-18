@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block head %}
+   <title>Dashboard</title>
+   <style>
+    html, body {
+        height: 100% !important;
+    }
+    .custom-card {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-input {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .custom-select {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .custom-button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+        }
+        .action-buttons {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
+    </style>
+   </style>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+   {% endblock %}
+
+{% block main %} 
+        <!-- NAVBAR -->
+    {% include 'navbar.html' %}
+       <!-- Display flash messages -->
+       {% include 'alert_message.html' %}
+       <div class="row">
+            <div class="title text-center mt-5 ">
+                <h1>
+                    You have accepted below holding positions.
+                </h1>
+                
+            </div>
+       </div>
+<div class="row my-5">
+    <div class="col-8 offset-2">
+        <table class="table table-striped table-hover text-center" id="myTable">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Period</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" class="table-group-divider">
+                {% for info in periods_info %}
+                <tr >
+
+                    <td>{{ info.name }}</td>
+                    <td>{{ info.period }}</td>
+                    <td style="color: {{ 'green' if not info.declined_by_user else 'red' }}">{{ "Ok" if not info.declined_by_user else "Declined" }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+</script>
+{% endblock %}

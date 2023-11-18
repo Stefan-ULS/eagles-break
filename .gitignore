@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+flask_session/
+company_holiday_app.db
+info.txt
+
+__pycache__/
+
+SECRETS.txt

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block head %}
+   <title>Dashboard</title>
+   <style>
+    
+    </style>
+   </style>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+   <link rel="stylesheet" href="\static\style.css?v2">
+
+   {% endblock %}
+
+{% block main %} 
+        <!-- NAVBAR -->
+    {% include 'navbar.html' %}
+       <!-- Display flash messages -->
+       {% include 'alert_message.html' %}
+
+       <div class="row my-5">
+        <div class="col-8 offset-2">
+            <table class="table table-striped table-hover text-center" id="myTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Substitute</th>
+                        <th scope="col">Period</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="table-group-divider">
+                   {% for info in user_holiday_info %}
+                    <tr>
+                        <td>{{ info.substitute }}</td>
+                        <td>{{ info.period }}</td>
+                        <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger decline-btn" 
+                            data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                            data-id="{{ info.id }}" data-period="{{ info.period }}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+      </div>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger" id="exampleModalLabel">ATTENTION!</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                You are about to cancel your days off in period <span id="modalPeriod"> </span>.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <form id="declineForm" method="post">
+                    <button type="submit" class="btn btn-outline-primary">Go ahead, I don't need them anymore</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="\static\scirpt.js?v1"></script>
+
+<script>
+
+    $(document).ready(function(){
+        $('.decline-btn').click(function(){
+            var id = $(this).data('id');
+            var period = $(this).data('period');
+            $('#modalPeriod').text(period);
+            $('#declineForm').attr('action', '/decline-holiday/' + id);
+        });
+    });
+
+</script>
+{% endblock %}
