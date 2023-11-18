@@ -15,7 +15,7 @@ venv\Scripts\activate
 
 ### APIs
 
-## The app have two APIs. In order to have a full app you should get the APIs keys.
+## The app has two APIs. To fully utilize the app, you should obtain the API keys.
 
 API | Description | Auth | Free | 
 
