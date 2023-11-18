@@ -9,10 +9,13 @@
           <a class="nav-link active" aria-current="page" href="{{ url_for('dashboard') }}">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('substitute', user_id=user_id) }}">Substitute Dashboard</a>
-        </li>
+          <a class="nav-link active" href="{{ url_for('holiday_table') }}">My Holiday Status</a>
+        </li> 
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ url_for('holiday_table') }}">Holiday Table</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('substitute', user_id=user_id) }}">Substitute Dashboard</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ url_for('notifications') }}">Notifications</a>
