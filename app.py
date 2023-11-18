@@ -9,7 +9,6 @@ from functions import (execute_db, fetch_manager_approval_request, fetch_pending
                         get_all_users_and_their_status_for_manager)
 from notification_functions import(holiday_declined_message, notification_seen_by_user)
 import datetime
-
 import secrets
 import requests
 import xml.etree.ElementTree as ET
@@ -645,7 +644,7 @@ def stock_market():
 
         # Set default end date to today 
         if not end_date:
-            end_date = datetime.now().strftime('%Y-%m-%d')
+            end_date = datetime.datetime.now().strftime('%Y-%m-%d')
 
         try:
             # Fetch stock market data for ticker

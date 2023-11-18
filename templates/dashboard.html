@@ -42,16 +42,17 @@
    {% endblock %}
 
 {% block main %} 
+
         <!-- NAVBAR -->
     {% include 'navbar.html' %}
        <!-- Display flash messages -->
        {% include 'alert_message.html' %}
-    
+
     <ul id="notification-list">
 
     </ul>
    
-    <div class="row">
+    <div class="row "style="--bs-gutter-x:0 !important">
         {% if user_role == 'manager' %}
         <h1 class="text-center">Hi Manager!</h1>
         <div class="col-xl-4 offset-xl-4 col-l-6">

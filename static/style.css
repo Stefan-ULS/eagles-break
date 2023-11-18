@@ -50,3 +50,8 @@ html, body {
     font-size: 0.8em;
 }
 
+.row{
+   --bs-gutter-x:0 !important;
+   margin-right: 0 !important;
+   margin-left: 0 !important;
+}
