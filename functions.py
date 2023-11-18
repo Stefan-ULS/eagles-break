@@ -193,7 +193,6 @@ def select_user_substitute_approval_status(user_id):
                             hp.period,
                             hp.approval_status,
                             hp.manager_approval_status,
-                            u.name AS user_name,
                             s.name AS substitute_name
                         FROM 
                             holiday_periods AS hp
