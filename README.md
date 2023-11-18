@@ -9,11 +9,17 @@ Eagles-breake directly addresses these issues by introducing a streamlined, tran
 
 Eagles-breake’s comprehensive approach transforms leave management from a potential point of failure into an efficient, transparent, and cohesive process. It eradicates the pitfalls of the old email-based system, replacing it with a dynamic, interactive, and foolproof mechanism that benefits managers, employees, and the organization as a whole. In summary, Eagles-breake is not just an application for managing leave; it's a strategic tool that enhances overall organizational effectiveness, particularly in fast-paced, responsive sectors like investment management.
 
-###APIs
+### Run venv 
+python -m venv venv
+venv\Scripts\activate
 
-##The app have two APIs. In order to have a full app you should get the APIs keys.
+### APIs
+
+## The app have two APIs. In order to have a full app you should get the APIs keys.
 
 API | Description | Auth | Free | 
+
 |---|---|---|---|---|
+
 | [Gold API](https://www.goldapi.io/dashboard) | API to get gold price data. | `apiKey` | Yes | 
 | [Oil Price API](https://www.oilpriceapi.com/) | API to get BRENT price data. | `apiKey`  | Yes | 
