@@ -5,7 +5,8 @@ from datetime import timedelta
 from functions import (execute_db, fetch_manager_approval_request, fetch_pending_holidays_for_substitute, 
                         check_for_holidays, update_user_free_days, user_db_password, 
                         change_password, user_system_role, update_user_info, all_persons_that_have_a_holiday,
-                        check_for_user_sent_or_approved_holidays, restore_free_days_holiday_declined_user, select_user_substitute_approval_status)
+                        check_for_user_sent_or_approved_holidays, restore_free_days_holiday_declined_user, select_user_substitute_approval_status,
+                        get_all_users_and_their_status_for_manager)
 from notification_functions import(holiday_declined_message, notification_seen_by_user)
 import datetime
 
@@ -170,7 +171,11 @@ def dashboard():
         substitutes = execute_db("SELECT name, id FROM users WHERE id != ? AND (system_role != 'manager' OR system_role IS NULL);", (user_id,), fetchall=True)
         number_of_free_days = execute_db("SELECT number_of_free_days FROM users WHERE id = ?", (user_id,), fetchone=True)
         number_of_days_used = execute_db("SELECT number_of_days_used FROM users WHERE id = ?", (user_id,), fetchone=True)
-        return render_template('dashboard.html', username=session['username'], number_of_days_used=number_of_days_used, number_of_free_days=number_of_free_days, substitute=substitutes, user_id=user_id)
+        user_role_result  = execute_db("SELECT system_role FROM users WHERE id = ?", (user_id,), fetchone=True)
+        user_role = user_role_result[0] if user_role_result else None
+        users_data_for_manager = get_all_users_and_their_status_for_manager()
+        print(users_data_for_manager)
+        return render_template('dashboard.html', username=session['username'], number_of_days_used=number_of_days_used, number_of_free_days=number_of_free_days, substitute=substitutes, user_role=user_role, users_data_for_manager=users_data_for_manager, user_id=user_id)
     else:
         return redirect(url_for('index'))
 

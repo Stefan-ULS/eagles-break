@@ -52,15 +52,44 @@
     </ul>
    
     <div class="row">
-        <div class="col">
-         
-        </div>
-    <h1 class="text-center">Welcome, {{ username }}</h1>
-   
+        {% if user_role == 'manager' %}
+        <h1 class="text-center">Hi Manager!</h1>
+        <div class="col-xl-4 offset-xl-4 col-l-6">
+        <div class="container mt-5">
+            <h1>Manager Dashboard</h1>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Free Days</th>
+                        <th>Days Used</th>
             
-       
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users_data_for_manager %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                            <td>{{ user.phone_number }}</td>
+                            <td>{{ user.number_of_free_days }}</td>
+                            <td>{{ user.number_of_days_used }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">No users found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div></div>
+    {% else %}
         
-    
+    <h1 class="text-center">Welcome, {{ username }}</h1>
     </div>
     <div class="row" style="--bs-gutter-x:0 !important">
         <div class="col-xl-4 offset-xl-4 col-l-6 ">
@@ -90,7 +119,8 @@
             </div>
         </div>
     </div>
-
+      
+    {% endif %}
  
 {% endblock %}
 

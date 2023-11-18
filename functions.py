@@ -283,4 +283,26 @@ def restore_free_days_holiday_declined_user(holiday_id):
     else:
         print("No such declined holiday found.") 
 
+def get_all_users_and_their_status_for_manager():
+    data = execute_db('''
+                        SELECT 
+                            u.id,
+                            u.name,
+                            u.email,
+                            u.phone_number,
+                            u.number_of_free_days,
+                            u.number_of_days_used
+                        FROM 
+                            users u
+                      ''', fetchall=True)
+    
+    if data is None:
+        return []
 
+    # Adjust column names to match the SQL query
+    col_names = ['id', 'name', 'email', 'phone_number', 'number_of_free_days', 'number_of_days_used']
+
+    # Use a different variable name inside the list comprehension
+    user_data_for_manager = [dict(zip(col_names, user_data)) for user_data in data]
+    print(user_data_for_manager)
+    return user_data_for_manager
