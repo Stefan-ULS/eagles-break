@@ -1,6 +1,6 @@
 # eagles-break
 
-#### Video Demo: [<URL HERE>](https://youtu.be/KXsp58E-W-g)
+#### Video Demo: https://youtu.be/KXsp58E-W-g
 
 #### Description:
 
